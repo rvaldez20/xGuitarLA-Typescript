@@ -1,9 +1,10 @@
 import { useState, useEffect, useMemo }from 'react'
 import { db } from '../data/db'
+import type { CartItem, Guitar } from '../types'
 
 export const useCart = () => {
 
-   const initialCart = () => {
+   const initialCart = ():CartItem[] => {
       const localStorageCart = localStorage.getItem('cartGuitar')
       return localStorageCart ? JSON.parse(localStorageCart) : []
    }
@@ -18,7 +19,8 @@ export const useCart = () => {
       localStorage.setItem('cartGuitar', JSON.stringify(cart))
    }, [cart])
    
-   function addToCart(item) {
+   function addToCart(item: Guitar) {
+      console.log(item)
       // verificamo si el item no se ha agregado al carrito
       const itemExists = cart.findIndex(guitar => guitar.id === item.id)
       
@@ -30,8 +32,9 @@ export const useCart = () => {
          setCart(updateCart)
       } else{
          // no existe y se agrega
-         item.quantity = 1
-         setCart([...cart, item])
+         const newItem:CartItem = {...item, quantity: 1} //convercio de Type: de Guitar a cardItem
+         setCart([...cart, newItem])
+         alert(`Guitar ${item.name} add cart`)
       }
    }
 
