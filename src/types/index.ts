@@ -11,6 +11,15 @@ export type CartItem = Guitar & {
    quantity: number
 }
 
+//! gtype para el ID usando Lookup
+export type GuitarID = Guitar['id']
+
+
+//?===================================================================================================== 
+
+//! type para el ID usando Pick
+// export type GuitarID = Pick<Guitar, 'id'>
+
 //! aplicando herencia al interfaces
 // export interface CartItem extends Guitar {
 //    quantity: number

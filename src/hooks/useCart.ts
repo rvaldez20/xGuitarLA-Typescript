@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo }from 'react'
 import { db } from '../data/db'
-import type { CartItem, Guitar } from '../types'
+import type { CartItem, Guitar, GuitarID } from '../types'
 
 export const useCart = () => {
 
@@ -9,7 +9,8 @@ export const useCart = () => {
       return localStorageCart ? JSON.parse(localStorageCart) : []
    }
 
-   const [data, setData] = useState(db)
+   // en el state de la data se quita la funcion setData porque no se usa  
+   const [data] = useState(db)
    const [cart, setCart] = useState(initialCart)
    
    const MIN_ITEMS = 1
@@ -38,11 +39,11 @@ export const useCart = () => {
       }
    }
 
-   function removeFromCart(id) {
+   function removeFromCart(id:GuitarID) {
       setCart( prevCart => prevCart.filter(guitar => guitar.id !== id))
    }
 
-   function decreaseQuantity(id) {
+   function decreaseQuantity(id:GuitarID) {
       const updateCart = cart.map( item => {
          if(item.id === id && item.quantity > MIN_ITEMS ) {
             return {
@@ -55,7 +56,7 @@ export const useCart = () => {
       setCart(updateCart)
    }
 
-   function increaseQuantity(id) {
+   function increaseQuantity(id:GuitarID) {
       const updateCart = cart.map( item => {
          if(item.id === id && item.quantity < MAX_ITEMS ) {
             return {
